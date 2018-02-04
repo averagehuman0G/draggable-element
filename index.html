@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #box {
+      background: lightgrey;
+      cursor: move;
+      height: 100px;
+      width: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="box"></div>
+  <script type="text/javascript">
+    /**
+  * Makes an element draggable.
+  *
+  * Acceptance criteria:
+  * - When mouse is over element, it becomes color skyblue.
+  * - When mouse selects element, it becomes color tomato.
+  * - When mouse selects element and moves, the element moves with the mouse.
+  * - When mouse no longer selects element, the element stays in position.
+  *
+  * @param {HTMLElement} el
+  */
+  function changesBackToDefaultColor() {
+    if(!el.clicked) {
+      el.style.backgroundColor = 'lightgrey';
+    }
+  }
+  function draggable(el) {
+
+    el.addEventListener('mouseover', function() {
+    el.style.backgroundColor = 'skyblue';
+    el.addEventListener('mouseout', changesBackToDefaultColor);
+    // We would be adding the mouseout event listener everytime if we didn't remove this listener at the end
+    el.removeEventListener('mouseout', changesBackToDefaultColor);
+    el.addEventListener('mousedown', movingMouse);
+    // Prevents memory leak
+    el.addEventListener('mouseup', function() {
+      el.removeEventListener('mousemove', movingMouse);
+    });
+  });
+
+  el.addEventListener('click', function() {
+    el.style.backgroundColor = 'tomato';
+  });
+
+  function movingMouse(e) {
+    const currentXPosition = e.clientX;
+    const currentYPosition = e.clientY;
+
+    console.log(currentXPosition);
+    console.log(currentYPosition);
+    el.style.position = 'absolute';
+    el.style.top = currentYPosition + 'px';
+    el.style.left = currentXPosition + 'px';
+
+  }
+
+
+  }
+
+  draggable(document.getElementById('box'));
+  </script>
+</body>
+</html>
