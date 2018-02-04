@@ -52,11 +52,15 @@
     el.style.top = currentYPosition + 'px';
     el.style.left = currentXPosition + 'px';
   }
+
+  function cleanUp() {
+    document.removeEventListener('mousemove', movingMouse);
+    document.removeEventListener('mouseup', cleanUp);
+  }
+
   function selected(e) {
     //On mouseup we are no longer moving and don't need to have a mousemove listener
-    document.addEventListener('mouseup', function() {
-      document.removeEventListener('mousemove', movingMouse);
-    });
+    document.addEventListener('mouseup', cleanUp);
 
     document.addEventListener('mousemove', movingMouse);
   }
