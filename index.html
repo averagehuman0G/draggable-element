@@ -29,45 +29,40 @@
   *
   * @param {HTMLElement} el
   */
-  function changesBackToDefaultColor() {
-    if(!el.clicked) {
+  const el = document.getElementById('box');
+  function changesBackToDefaultColor(e) {
+    if(el.style.backgroundColor === 'skyblue') {
       el.style.backgroundColor = 'lightgrey';
     }
   }
-  function draggable(el) {
-
-    el.addEventListener('mouseover', function() {
-    el.style.backgroundColor = 'skyblue';
-    el.addEventListener('mouseout', changesBackToDefaultColor);
-    // We would be adding the mouseout event listener everytime if we didn't remove this listener at the end
-    el.removeEventListener('mouseout', changesBackToDefaultColor);
-    el.addEventListener('mousedown', movingMouse);
-    // Prevents memory leak
-    el.addEventListener('mouseup', function() {
-      el.removeEventListener('mousemove', movingMouse);
-    });
-  });
-
+  // * - When mouse selects element, it becomes color tomato.
   el.addEventListener('click', function() {
     el.style.backgroundColor = 'tomato';
+  });
+  //* - When mouse hovers the element, it becomes color skyblue.
+  el.addEventListener('mouseover', function() {
+    el.addEventListener('mouseleave', changesBackToDefaultColor);
+    el.style.backgroundColor = 'skyblue';
   });
 
   function movingMouse(e) {
     const currentXPosition = e.clientX;
     const currentYPosition = e.clientY;
-
-    console.log(currentXPosition);
-    console.log(currentYPosition);
     el.style.position = 'absolute';
     el.style.top = currentYPosition + 'px';
     el.style.left = currentXPosition + 'px';
+  }
+  function selected(e) {
+    //On mouseup we are no longer moving and don't need to have a mousemove listener
+    document.addEventListener('mouseup', function() {
+      document.removeEventListener('mousemove', movingMouse);
+    });
 
+    document.addEventListener('mousemove', movingMouse);
   }
 
 
-  }
-
-  draggable(document.getElementById('box'));
+  el.addEventListener('mousedown', selected);
   </script>
 </body>
 </html>
