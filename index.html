@@ -5,73 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
-  <style>
-    h1 {
-      text-align: center;
-    }
-    #box {
-      background: lightgrey;
-      cursor: move;
-      height: 100px;
-      width: 100px;
-      top: 100px;
-      left: 100px;
-    }
-  </style>
+
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Click and Drag The Element</h1>
   <div id="box"></div>
-  <script type="text/javascript">
-    /**
-  * Makes an element draggable.
-  *
-  * Acceptance criteria:
-  * - When mouse is over element, it becomes color skyblue.
-  * - When mouse selects element, it becomes color tomato.
-  * - When mouse selects element and moves, the element moves with the mouse.
-  * - When mouse no longer selects element, the element stays in position.
-  *
-  * @param {HTMLElement} el
-  */
-  const el = document.getElementById('box');
-  function changesBackToDefaultColor(e) {
-    if(el.style.backgroundColor === 'skyblue') {
-      el.style.backgroundColor = 'lightgrey';
-    }
-  }
-  // * - When mouse selects element, it becomes color tomato.
-  el.addEventListener('click', function() {
-    el.style.backgroundColor = 'tomato';
-  });
-  //* - When mouse hovers the element, it becomes color skyblue.
-  el.addEventListener('mouseover', function() {
-    el.addEventListener('mouseleave', changesBackToDefaultColor);
-    el.style.backgroundColor = 'skyblue';
-  });
-
-  function movingMouse(e) {
-    const currentXPosition = e.clientX;
-    const currentYPosition = e.clientY;
-    el.style.position = 'absolute';
-    el.style.top = currentYPosition + 'px';
-    el.style.left = currentXPosition + 'px';
-  }
-
-  function cleanUp() {
-    document.removeEventListener('mousemove', movingMouse);
-    document.removeEventListener('mouseup', cleanUp);
-  }
-
-  function selected(e) {
-    //On mouseup we are no longer moving and don't need to have a mousemove listener
-    document.addEventListener('mouseup', cleanUp);
-
-    document.addEventListener('mousemove', movingMouse);
-  }
-
-
-  el.addEventListener('mousedown', selected);
-  </script>
+  <script src="index.js" charset="utf-8"></script>
 </body>
 </html>
